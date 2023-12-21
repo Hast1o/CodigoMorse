@@ -62,10 +62,8 @@ class Arbol {
         } else {
             if (_letra < _raiz.letra) {
                 _raiz.izquierdo = insersionRecursiva(_raiz.izquierdo, _letra, _codigo);
-            } else {
-                if (_letra > _raiz.letra) {
-                    _raiz.derecho = insersionRecursiva(_raiz.derecho, _letra, _codigo);
-                }
+            } else if (_letra > _raiz.letra){
+                _raiz.derecho = insersionRecursiva(_raiz.derecho, _letra, _codigo);
             }
         }
         return _raiz;
@@ -82,7 +80,7 @@ class Arbol {
             if (_codigo.equals(_raiz.codigo)) {
                 return _raiz.letra;
             } else {
-                System.out.println("hola");
+                
                 if (_codigo.compareTo(_raiz.codigo) < 0) {
                     return obtenerRecursivo(_raiz.izquierdo, _codigo);
                 } else {
@@ -135,14 +133,11 @@ public class Main {
         Letras.add(new Pares('Z', "--.."));
         Letras.add(new Pares('Q', "--.-"));
 
-        for (Pares pares : Letras) {
-            System.out.println("Letra "+pares.letra+" Codigo "+pares.Clave);
-        }
+        
 
         Arbol arbolMorse = new Arbol(Letras);
         System.out.println("Digite una clave");
         String clave = in.nextLine();
-        System.out.println(clave);
         String palabraDescifrada = arbolMorse.descifrado(clave);
         System.out.println(palabraDescifrada);
     }
