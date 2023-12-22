@@ -69,37 +69,33 @@ class Arbol {
         return _raiz;
     }
 
-    public char obtenerCodigo(String _codigo) {
-        return obtenerRecursivo(raiz, _codigo);
+    public void obtenerCodigo(String _codigo,StringBuilder palabraD) {
+        obtenerRecursivo(raiz, _codigo,palabraD);
     }
 
-    public char obtenerRecursivo(Nodo _raiz, String _codigo) {
+    public void obtenerRecursivo(Nodo _raiz, String _codigo,StringBuilder palabraD) {
         if (_raiz == null) {
-            return ' ';
+            
         } else {
             if (_codigo.equals(_raiz.codigo)) {
-                return _raiz.letra;
+                palabraD.append(_raiz.letra);
             } else {
-                
-                if (_codigo.compareTo(_raiz.codigo) < 0) {
-                    return obtenerRecursivo(_raiz.izquierdo, _codigo);
-                } else {
-                    return obtenerRecursivo(_raiz.derecho, _codigo);
-                }
+                obtenerRecursivo(_raiz.izquierdo, _codigo,palabraD);
+                obtenerRecursivo(_raiz.derecho, _codigo,palabraD);
             }
         }
     }
 
-    public String descifrado(String _palabraMorse) {
+    public void descifrado(String _palabraMorse) {
         StringBuilder palabraDescifrada = new StringBuilder();
         String[] letras = _palabraMorse.split("\\s+");
         for (String letra : letras) {
-            char caracter = obtenerCodigo(letra);
-            System.out.println(caracter);
-            palabraDescifrada.append(caracter);
+            this.obtenerCodigo(letra,palabraDescifrada);
         }
-        return palabraDescifrada.toString();
+        System.out.println(palabraDescifrada);
     }
+
+     
 }
 
 public class Main {
@@ -132,13 +128,15 @@ public class Main {
         Letras.add(new Pares('Y', "-.--"));
         Letras.add(new Pares('Z', "--.."));
         Letras.add(new Pares('Q', "--.-"));
-
-        
-
         Arbol arbolMorse = new Arbol(Letras);
-        System.out.println("Digite una clave");
-        String clave = in.nextLine();
-        String palabraDescifrada = arbolMorse.descifrado(clave);
-        System.out.println(palabraDescifrada);
+        int comenzar = 0;
+        while(comenzar == 0){
+            System.out.println("Digite una clave o ENTER para salir");
+            String clave = in.nextLine();
+            arbolMorse.descifrado(clave);
+            if(clave.equals("")){
+                comenzar=1;
+            }
+        }
     }
 }
